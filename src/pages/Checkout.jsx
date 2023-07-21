@@ -1,22 +1,25 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import "./checkout.css";
 import PaymentForm from "../components/PaymentForm";
 import BillingForm from "../components/BillingForm";
 import ShippingForm from "../components/ShippingForm";
+import { useDispatch, useSelector } from "react-redux";
+import OrderSuccessCard from "../components/OrderSuccessCard";
+import { useState } from "react";
+import { setScrollable } from "../redux/features/generalSlice";
+import BackBtn from "../components/BackBtn";
 
 const Checkout = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  // * hooks
+  const [isOrdered, setIsOrdered] = useState(false);
+  const { shippingCost } = useSelector((state) => state.cartSlice);
+  const dispatch = useDispatch();
+  // console.log("shipping cost --->",shippingCost)
 
   let storedCart;
   if (JSON.parse(localStorage.getItem("storedCart"))?.products.length > 0) {
     storedCart = JSON.parse(localStorage.getItem("storedCart"));
   }
+
+  // * handles
 
   const taxCalculation = (percent = 5) => {
     return (storedCart?.totalPrice * (percent / 100)).toFixed(2);
@@ -28,73 +31,86 @@ const Checkout = () => {
     ).toFixed(2);
   };
 
-  return (
-    <div className=" flex flex-col lg:flex-row gap-10 md:gap-16 py-10 md:py-16">
-      <div className="w-full flex flex-col gap-10 md:gap-16 lg:w-2/3">
-        <PaymentForm />
-        <BillingForm />
-        <ShippingForm/>
-      </div>
+  const handleContinueOrderClick = () => {
+    setIsOrdered(!isOrdered);
+  };
 
-      <article className=" ml-auto shadow-4 h-fit rounded-lg p-5 md:p-10">
-        <div className=" flex flex-col gap-2 w-full">
-          <label className=" w-2/3" htmlFor="state">
-            Discount Code
-          </label>
-          <div className=" flex items-center gap-2 mb-5">
-            <input
-              type="text"
-              name="discount_code"
-              className="form-input w-full"
-              placeholder="Add discount code"
-            />
-            <button className=" active:scale-95 form-input w-1/3 text-sm">Apply</button>
-          </div>
+  return (
+    <>
+      <BackBtn />
+      <div className="flex flex-col lg:flex-row gap-10 md:gap-16 py-10 md:pb-16">
+        <div className="w-full flex flex-col gap-10 md:gap-16 lg:w-2/3">
+          <PaymentForm />
+          <BillingForm />
+          <ShippingForm />
         </div>
 
-        <section className="w-full h-fit">
-          {/* Subtotal  */}
-          <div className=" mb-2 flex justify-between items-center">
-            <h2 className=" font-bold opacity-70">Subtotal</h2>
-            <p className=" select-none font-semibold">
-              ${(storedCart?.totalPrice).toFixed(2)}
-            </p>
+        <article className=" ml-auto text-sm shadow-4 h-fit rounded-lg p-5 md:p-10">
+          <div className=" flex flex-col gap-2 w-full">
+            <label className=" w-2/3 font-mono text-base" htmlFor="state">
+              Discount Code
+            </label>
+            <div className=" flex items-center gap-2 mb-5">
+              <input
+                type="text"
+                name="discount_code"
+                className="form-input w-full"
+                placeholder="Add discount code"
+              />
+              <button className=" active:scale-95 form-input w-1/3">
+                Apply
+              </button>
+            </div>
           </div>
 
-          {/* discount  */}
-          <div className=" mb-2 flex justify-between items-center">
-            <h2 className=" font-bold opacity-70">Discount</h2>
-            <p className=" select-none font-semibold">
-              ${parseFloat(0).toFixed(2)}
-            </p>
-          </div>
+          <section className="w-full h-fit">
+            {/* Subtotal  */}
+            <div className=" mb-2 flex justify-between items-center">
+              <h2 className=" font-bold opacity-70">Subtotal</h2>
+              <p className=" select-none font-semibold">
+                ${(storedCart?.totalPrice).toFixed(2)}
+              </p>
+            </div>
 
-          {/* tax  */}
-          <div className="flex mb-2 justify-between items-center">
-            <h2 className=" font-bold opacity-70">Tax 5%</h2>
-            <p className=" select-none font-semibold">${taxCalculation()}</p>
-          </div>
+            {/* discount  */}
+            <div className=" mb-2 flex justify-between items-center">
+              <h2 className=" font-bold opacity-70">Discount</h2>
+              <p className=" select-none font-semibold">${0}</p>
+            </div>
 
-          {/* shipping cost  */}
-          <div className=" mb-5 flex justify-between items-center">
-            <h2 className=" font-bold opacity-70">Shipping cost</h2>
-            <p className=" select-none font-semibold">${taxCalculation()}</p>
-          </div>
+            {/* tax  */}
+            <div className="flex mb-2 justify-between items-center">
+              <h2 className=" font-bold opacity-70">Tax 5%</h2>
+              <p className=" select-none font-semibold">${taxCalculation()}</p>
+            </div>
 
-          {/* grand total  */}
-          <div className=" border-t-[1.5px] border-black border-opacity-[0.15] py-3 flex justify-between items-center">
-            <h2 className=" font-bold opacity-70">Grand total</h2>
-            <p className=" select-none font-semibold">
-              ${grandTotalCalculation()}
-            </p>
-          </div>
+            {/* shipping cost  */}
+            <div className=" mb-5 flex justify-between items-center">
+              <h2 className=" font-bold opacity-70">Shipping cost</h2>
+              <p className=" select-none font-semibold">${shippingCost}</p>
+            </div>
 
-          <button className=" active:scale-95 transition duration-200 text-sm btn-1 w-full bg-teal-800 text-slate-100">
-            Continue to payment
-          </button>
-        </section>
-      </article>
-    </div>
+            {/* grand total  */}
+            <div className=" border-t-[1.5px] border-black border-opacity-[0.15] py-3 flex justify-between items-center">
+              <h2 className=" font-bold opacity-70">Grand total</h2>
+              <p className=" select-none font-semibold">
+                ${grandTotalCalculation()}
+              </p>
+            </div>
+
+            <button
+              onClick={handleContinueOrderClick}
+              className=" active:scale-95 transition duration-200 btn-1 w-full bg-teal-800 text-slate-100"
+            >
+              Continue to payment
+            </button>
+          </section>
+        </article>
+      </div>
+      {isOrdered && (
+        <OrderSuccessCard handleContinueOrderClick={handleContinueOrderClick} />
+      )}
+    </>
   );
 };
 

@@ -6,10 +6,12 @@ import { FiShoppingCart } from "react-icons/fi";
 import Category from "./Category";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Search from "./Search";
+import Profile from "./Profile";
 
 const Navbar = () => {
   const { cartProducts } = useSelector((state) => state.cartSlice);
-
+ 
   // let storedCart;
   // if (JSON.parse(localStorage.getItem("storedCart"))?.products.length > 0) {
   //   storedCart = JSON.parse(localStorage.getItem("storedCart"));
@@ -23,17 +25,19 @@ const Navbar = () => {
   // storedCart = JSON.parse(localStorage.getItem("storedCart"))
 
   return (
-    <div className=" bg-white flex items-center sm:justify-around w-full h-20 border-b border-black border-opacity-20">
+    <div className={`bg-white  flex items-center sm:justify-around w-full h-20 border-b border-black border-opacity-20`}>
       {/* burger menu  */}
       <div className="sm:hidden ml-3">
         <HiOutlineMenuAlt2 className=" text-2xl" />
       </div>
 
       {/* logo  */}
-      <h1 className=" hidden sm:flex items-center gap-1">
-        <GiShoppingCart className=" text-xl md:text-3xl" />
-        <span className=" heading-1">Shopcart</span>
-      </h1>
+      <Link to={"/"}>
+        <h1 className=" hidden sm:flex items-center gap-1">
+          <GiShoppingCart className=" text-xl md:text-3xl" />
+          <span className=" heading-1">Shopcart</span>
+        </h1>
+      </Link>
 
       {/* categories  */}
       <div className=" ml-auto sm:m-0 mr-5">
@@ -41,20 +45,7 @@ const Navbar = () => {
       </div>
 
       {/* search  */}
-      <div className="p-3 md:py-2 md:px-4 rounded-full hidden sm:flex items-center bg-gray-100">
-        <input
-          className=" outline-none bg-transparent hidden md:block"
-          type="text"
-          placeholder="Search . . . "
-        />
-        <GoSearch className=" text-xl opacity-70" />
-      </div>
-
-      {/* account  */}
-      <div className="hidden sm:flex items-center icon-heading-1">
-        <GoPerson className=" text-xl" />
-        <h3 className=" heading-2">Account</h3>
-      </div>
+      <Search />
 
       {/* cart  */}
       <Link to={"/cart"} className="mr-5 sm:mr-0">
@@ -66,6 +57,9 @@ const Navbar = () => {
           <h3 className=" heading-2">Cart</h3>
         </div>
       </Link>
+
+      {/* account  */}
+      <Profile />
     </div>
   );
 };

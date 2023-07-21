@@ -4,7 +4,7 @@ const BillingForm = () => {
   return (
     <>
       <form className=" border shadow-4 rounded-lg p-5 md:p-10 w-full h-fit flex flex-col gap-5">
-        <h1 className="">Billing Address</h1>
+        <h1 className=" font-mono">Billing Address</h1>
 
         {/* first name & last name  */}
         <section className=" flex gap-3 w-full">

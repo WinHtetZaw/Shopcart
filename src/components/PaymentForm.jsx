@@ -1,19 +1,43 @@
-import React from "react";
+import { useState } from "react";
 
 const PaymentForm = () => {
+  // * hooks
+  const [radioNumber, setRadioNumber] = useState(1);
+
+  // * handles
+  const handleRadioClick = (num) => {
+    setRadioNumber(num);
+  };
+
   return (
     <>
       <form className=" shadow-4 rounded-lg p-5 md:p-10 w-full h-fit flex flex-col gap-5">
-        <h1 className="">Select Payment Methods</h1>
+        <h1 className=" font-mono">Select Payment Methods</h1>
 
-        <section className="bdr-1 rounded-md">
+        <section className="bdr-1 text-sm rounded-md">
           {/* top  */}
-          <div className="flex justify-between items-center border-b-[1.5px] border-black border-opacity-[0.15] p-3">
+          <div
+            onClick={() => handleRadioClick(1)}
+            className="flex cursor-pointer justify-between items-center border-b-[1.5px] border-black border-opacity-[0.15] p-3"
+          >
             <span className="flex items-center gap-2">
-              <input type="radio" name="card_type" />
+              <input
+                checked={radioNumber == 1}
+                onChange={() => {}}
+                type="radio"
+                name="card_type"
+              />
               <h2>Credit Card</h2>
             </span>
-            <img className=" w-7" src="/png/visa.png" alt="visa_png" />
+
+            <span className=" flex gap-3 items-center">
+              <img className=" w-7" src="/png/visa.png" alt="visa_png" />
+              <img
+                className=" w-7 h-5 object-contain"
+                src="/png/mastercard.png"
+                alt="mastercard_png"
+              />
+            </span>
           </div>
 
           <div className=" flex flex-col gap-3 px-3 py-5">
@@ -48,9 +72,17 @@ const PaymentForm = () => {
         </section>
 
         {/* paypal  */}
-        <section className="flex justify-between items-center bdr-1 rounded-md">
+        <section
+          onClick={() => handleRadioClick(2)}
+          className="flex cursor-pointer justify-between items-center bdr-1 text-sm rounded-md"
+        >
           <div className="flex items-center gap-2 p-3">
-            <input type="radio" name="card_type" />
+            <input
+              checked={radioNumber == 2}
+              onChange={() => {}}
+              type="radio"
+              name="card_type"
+            />
             <h2>Paypal</h2>
           </div>
 
@@ -58,9 +90,17 @@ const PaymentForm = () => {
         </section>
 
         {/* amazon  */}
-        <section className="flex items-center justify-between bdr-1 rounded-md">
+        <section
+          onClick={() => handleRadioClick(3)}
+          className="flex cursor-pointer items-center justify-between bdr-1 text-sm rounded-md"
+        >
           <div className="flex items-center gap-2 p-3">
-            <input type="radio" name="card_type" />
+            <input
+              checked={radioNumber == 3}
+              onChange={() => {}}
+              type="radio"
+              name="card_type"
+            />
             <h2>Amazon</h2>
           </div>
           <div className="mr-3 pt-2">

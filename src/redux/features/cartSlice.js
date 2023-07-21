@@ -4,6 +4,7 @@ const initialState = {
   cartProducts: [],
   currentItemInfo: [],
   totalPrice: 0,
+  shippingCost: 0,
 };
 
 let storedCart;
@@ -19,7 +20,6 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     removeAll: (state) => {
-      // * condition for add to cart or remove from cart method
       state.cartProducts = [];
       state.currentItemInfo = [];
       state.totalPrice = 0;
@@ -27,7 +27,6 @@ export const cartSlice = createSlice({
       localStorage.removeItem("storedCart");
     },
 
-    // * add to cart click method
     addToCart: (state, { payload }) => {
       // * check a product is already add or not
       const sameProducts = state.cartProducts.filter(
@@ -37,7 +36,7 @@ export const cartSlice = createSlice({
         return state;
       }
 
-      // * create an object to calculate current price and quantity
+      // * create an array to calculate current Item price and quantity
       state.currentItemInfo = [
         ...state.currentItemInfo,
         {
@@ -49,31 +48,25 @@ export const cartSlice = createSlice({
 
       state.cartProducts = [...state.cartProducts, payload];
       state.totalPrice += payload.price;
-      // state.isAdded = true;
 
       const storedCart = {
         products: state.cartProducts,
         currentProduct: state.currentItemInfo,
-        // isAddedInCart: state.isAdded,
         totalPrice: state.totalPrice,
       };
       localStorage.setItem("storedCart", JSON.stringify(storedCart));
     },
     removeFromCart: (state, { payload }) => {
-      // remove from cart click method
-
       // * filter cart products
       const lists = state.cartProducts.filter((el) => el.id != payload.id);
 
-      // * find current in currentItemInfo array to calculate current price and quantity
+      // * find current item in currentItemInfo array to calculate current item price and quantity
       const filter = state.currentItemInfo.find(
         (el) => el.currentProductId == payload.id
       );
-      // filter.singleItemPrice = payload.price;
 
       state.cartProducts = lists;
       state.totalPrice = state.totalPrice - filter.singleItemPrice;
-      // state.totalPrice - filter.quantity * filter.singleItemPrice;
 
       const currentItemInfoLists = state.currentItemInfo.filter(
         (el) => el.currentProductId != payload.id
@@ -81,11 +74,10 @@ export const cartSlice = createSlice({
 
       state.currentItemInfo = currentItemInfoLists;
 
-      // prepare array to store in local storage
+      // * prepare array to store in local storage
       const storedCart = {
         products: state.cartProducts,
         currentProduct: state.currentItemInfo,
-        // isAddedInCart: state.isAdded,
         totalPrice: state.totalPrice,
       };
       localStorage.setItem("storedCart", JSON.stringify(storedCart));
@@ -93,27 +85,32 @@ export const cartSlice = createSlice({
 
     // * when click + btn increase quantity and price method
     addQuantityPriceCalc: (state, { payload }) => {
-      // * find current in currentItemInfo array to calculate current price and quantity
+      // * find current item in currentItemInfo array to calculate current item price and quantity
       const filter = state.currentItemInfo.find(
         (el) => el.currentProductId == payload.id
       );
+
+      if (filter.quantity == payload.stock) {
+        console.log("tu nay p");
+        return;
+      }
+
       filter.quantity += 1;
       filter.singleItemPrice += payload.price;
       state.totalPrice += payload.price;
 
-      // prepare array to store in local storage
+      // * prepare array to store in local storage
       const storedCart = {
         products: state.cartProducts,
         currentProduct: state.currentItemInfo,
-        // isAddedInCart: state.isAdded,
         totalPrice: state.totalPrice,
       };
       localStorage.setItem("storedCart", JSON.stringify(storedCart));
     },
 
-    // when click - btn reduce quantity and price
+    // * when click - btn reduce quantity and price
     reduceQuantityPriceCalc: (state, { payload }) => {
-      // * find current in currentItemInfo array to calculate current price and quantity
+      // * find current item in currentItemInfo array to calculate current item price and quantity
       const filter = state.currentItemInfo.find(
         (el) => el.currentProductId == payload.id
       );
@@ -124,14 +121,16 @@ export const cartSlice = createSlice({
       filter.quantity -= 1;
       state.totalPrice -= payload.price;
 
-      // prepare array to store in local storage
+      // * prepare array to store in local storage
       const storedCart = {
         products: state.cartProducts,
         currentProduct: state.currentItemInfo,
-        // isAddedInCart: state.isAdded,
         totalPrice: state.totalPrice,
       };
       localStorage.setItem("storedCart", JSON.stringify(storedCart));
+    },
+    setShippingCost: (state, { payload }) => {
+      state.shippingCost = payload;
     },
   },
 });
@@ -142,5 +141,6 @@ export const {
   removeFromCart,
   addQuantityPriceCalc,
   reduceQuantityPriceCalc,
+  setShippingCost,
 } = cartSlice.actions;
 export default cartSlice.reducer;

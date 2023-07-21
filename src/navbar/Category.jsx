@@ -8,15 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Category = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, isLoading, isSuccess } = useGetAllCategoriesQuery();
-  const dispatch = useDispatch();
-  const nav = useNavigate();
 
-  // * handles
-  const handleCategoryClick = (name) => {
-    // dispatch(searchByCategory(name));
-    nav(`/products/category/${name}`);
-    console.log(name);
-  };
   return (
     <>
       <div
@@ -33,7 +25,7 @@ const Category = () => {
 
         {/* drop area  */}
         {isOpen && (
-          <ul className="dropdown-area-1 z-10 font-1 left-0 py-3 px-1 h-[30vh] overflow-y-scroll">
+          <ul className="dropdown-area-1 top-10 font-1 right-0 h-[50vh] overflow-y-scroll">
             <li className=" text-sm opacity-50 text-center font-bold">
               Category List
             </li>
@@ -44,7 +36,7 @@ const Category = () => {
             </Link>
             {data?.map((el, index) => (
               <Link key={index} to={`/products/category/${el}`}>
-                <li className="capitalize px-3 py-2 rounded-sm select-none cursor-pointer hover:bg-gray-100">
+                <li className="dropdown-item">
                   {el}
                 </li>
               </Link>

@@ -15,7 +15,7 @@ const AllProducts = () => {
   // "url(https://images.pexels.com/photos/1366998/pexels-photo-1366998.jpeg)",
   return (
     <>
-      {/* <div
+      <div
         style={{
           backgroundImage:
             "url(https://images.pexels.com/photos/399159/pexels-photo-399159.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
@@ -28,7 +28,7 @@ const AllProducts = () => {
         <button className="md:mt-10 mt-5 btn-1 capitalize text-white bg-teal-800">
           buy now
         </button>
-      </div> */}
+      </div>
       <div className="my-10 grid grid-cols-2 xs:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 md:gap-x-10 md:gap-y-16">
         {looping}
       </div>

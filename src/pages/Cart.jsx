@@ -1,4 +1,3 @@
-import { Checkbox } from "@mantine/core";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { GoTrash } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +8,7 @@ import {
   removeFromCart,
 } from "../redux/features/cartSlice";
 import { Link } from "react-router-dom";
+import BackBtn from "../components/BackBtn";
 
 const Cart = () => {
   const { cartProducts } = useSelector((state) => state.cartSlice);
@@ -40,6 +40,7 @@ const Cart = () => {
       (el) => el.currentProductId == item.id
     );
     const currentItemQuantity = currentItem?.quantity;
+
     return (
       <tr
         key={index}
@@ -50,7 +51,7 @@ const Cart = () => {
           {/* <Checkbox className=" mx-auto" onChange={handleCheckChange} color="cyan" /> */}
         </td>
         <td className=" w-6/12 py-3">
-          <div className="flex gap-3 w-full items-center">
+          <div className="flex gap-3 flex-col md:flex-row w-full items-center">
             <div className=" h-[100px] aspect-square">
               <img
                 className=" w-full h-full origin-center object-contain"
@@ -61,7 +62,7 @@ const Cart = () => {
             <h3 className="">{item.title}</h3>
           </div>
         </td>
-        <td className=" w-3/12">
+        <td className=" w-3/12 px-3">
           <div className=" flex justify-center items-center gap-3 flex-col">
             <div className=" flex w-fit bdr-1 rounded-lg py-2 px-4 text-lg gap-5 items-center">
               <span
@@ -96,19 +97,22 @@ const Cart = () => {
 
   return (
     <>
+    <BackBtn/>
       {storedCart?.products.length > 0 ? (
-        <div className=" flex flex-col lg:flex-row gap-10 md:gap-16 py-10 md:py-16">
+        <div className=" flex flex-col lg:flex-row gap-10 md:gap-16 py-10 md:pb-16">
           {/* cart list table  */}
-          <section className="md:p-10 p-5 w-full lg:w-2/3 shadow-4 rounded-lg">
+          <section className="md:p-10 overflow-x-scroll sm:overflow-x-hidden text-sm p-5 w-full lg:w-2/3 shadow-4 rounded-lg">
             <div className=" flex justify-between items-center mb-3">
-              <h2 className=" text-xl font-2 relative after-underline font-bold capitalize">cart table</h2>
+              <h2 className=" text-xl font-2 relative after-underline font-bold capitalize">
+                cart table
+              </h2>
 
               <button
                 onClick={() => dispatch(removeAll())}
                 className=" active:scale-95 transition duration-200 select-none flex gap-1 items-center"
               >
                 <GoTrash />
-                <h5 className=" text-sm text-red-600">Remove all</h5>
+                <h5 className="text-red-600">Remove all</h5>
               </button>
             </div>
 
@@ -127,10 +131,10 @@ const Cart = () => {
               <tbody>{rows}</tbody>
               <tfoot>
                 <tr>
-                  <th className=" text-right py-3" colSpan={3}>
+                  <th className=" text-right pt-5" colSpan={3}>
                     Total Price
                   </th>
-                  <th className=" text-right">
+                  <th className=" text-right pt-5">
                     ${(storedCart?.totalPrice).toFixed(2)}
                   </th>
                 </tr>
@@ -139,7 +143,7 @@ const Cart = () => {
           </section>
 
           {/* left  */}
-          <section className="p-5 md:p-10 ml-auto lg:mx-auto shadow-4 rounded-lg min-w-[250px] w-1/3 h-fit">
+          <section className="p-5 text-sm md:p-10 ml-auto lg:mx-auto shadow-4 rounded-lg min-w-[250px] w-1/3 h-fit">
             {/* Subtotal  */}
             <div className=" mb-2 flex justify-between items-center">
               <h2 className=" font-bold opacity-70">Subtotal</h2>
@@ -171,7 +175,7 @@ const Cart = () => {
             </div>
 
             <Link to={"/cart/checkout"}>
-              <button className=" active:scale-95 transition duration-200 text-sm btn-1 w-full bg-teal-800 text-slate-100">
+              <button className=" active:scale-95 transition duration-200 btn-1 w-full bg-teal-800 text-slate-100">
                 Checkout Now
               </button>
             </Link>

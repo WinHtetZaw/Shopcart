@@ -3,8 +3,8 @@ import { Outlet } from "react-router-dom";
 
 const ProductLayout = () => {
   return (
-    <>
-    <div
+    <div className="px-3 md:px-10">
+    {/* <div
         style={{
           backgroundImage:
             "url(https://images.pexels.com/photos/399159/pexels-photo-399159.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
@@ -17,9 +17,9 @@ const ProductLayout = () => {
         <button className="md:mt-10 mt-5 btn-1 capitalize text-white bg-teal-800">
           buy now
         </button>
-      </div>
+      </div> */}
       <Outlet />
-    </>
+    </div>
   );
 };
 

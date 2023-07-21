@@ -23,6 +23,14 @@ export const productApi = createApi({
       query: () => "/products",
       providesTags: ["products"],
     }),
+    searchProducts: builder.query({
+      query: (name) => `/products/search?q=${name}`,
+      providesTags: ["products"],
+    }),
+    getProductsBySkipAndLimit: builder.query({
+      query: ({ skip, limit }) => `/posts?skip=${skip}&limit=${limit}`,
+      providesTags: ["products"],
+    }),
   }),
 });
 
@@ -31,4 +39,6 @@ export const {
   useGetAllCategoriesQuery,
   useGetAllProductsQuery,
   useGetProductByCategoryQuery,
+  useSearchProductsQuery,
+  useGetProductsBySkipAndLimitQuery,
 } = productApi;
