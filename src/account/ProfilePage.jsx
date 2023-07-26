@@ -3,18 +3,18 @@ import { BsPencilFill } from "react-icons/bs";
 const ProfilePage = () => {
   return (
     <>
-      <div className=" p-5 rounded-2xl overflow-hidden w-10/12 bg-gray-100">
+      <div className=" p-5 rounded-2xl overflow-hidden w-full bg-gray-100">
         <h1 className=" text-lg md:text-2xl mb-5 font-bold font-2">
           Account Settings
         </h1>
 
         <article className=" flex py-5 h-full bg-white rounded-2xl text-slate-700">
           {/* left  */}
-          <div className=" hidden md:flex flex-col px-3 items-center w-1/5 border-r-2 border-black border-opacity-10">
+          {/* <div className=" hidden md:flex flex-col px-3 items-center w-1/5 border-r-2 border-black border-opacity-10">
             <h2 className="sidebar-item active">
               My Profile
             </h2>
-          </div>
+          </div> */}
 
           {/* right  */}
           <div className=" flex flex-col gap-5 px-5 w-full">

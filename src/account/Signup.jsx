@@ -1,6 +1,11 @@
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
+// * react router dom
 import { Link, useNavigate } from "react-router-dom";
+
+// * react hook form
+import { useForm } from "react-hook-form";
+
+// * react hot toast
+import { toast } from "react-hot-toast";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -19,7 +24,7 @@ const Signup = () => {
     },
   });
 
-  // UAI ---> user account information
+  // ? UAI ---> user account information
   const onSubmit = (data) => {
     const token = Date.now();
     const UAI = {
@@ -29,18 +34,24 @@ const Signup = () => {
       auth: false,
       token,
     };
-    // console.log("shopcart-UAI --- ", UAI);
     localStorage.setItem("shopcart-UAI", JSON.stringify(UAI));
     toast.success("Successfully register!");
-    navigate("/sign-in");
+    navigate("/log-in");
   };
 
   return (
     <>
-      <div className=" bg-[url(https://images.pexels.com/photos/236910/pexels-photo-236910.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] p-5 sm:p-10 w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden overflow-y-scroll">
+      <div className=" bg-[url(https://images.pexels.com/photos/236910/pexels-photo-236910.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] relative p-3 xs:p-10 w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden overflow-y-scroll">
+
+        <Link to={"/products"}>
+          <button className="absolute top-5 left-10 text-slate-50 tracking-widest font-light italic">
+            Go to shop . . .
+          </button>
+        </Link>
+
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className=" max-w-[500px] mx-auto w-full p-5 sm:p-10 flex flex-col gap-5 glass-2 rounded-3xl"
+          className=" max-w-[500px] mx-auto w-full p-7 xs:p-10 flex flex-col gap-5 glass-2 rounded-3xl"
         >
           {/* title  */}
           <h1 className=" text-2xl font-2 font-bold mb-5 w-full text-center">
@@ -48,8 +59,8 @@ const Signup = () => {
           </h1>
 
           {/* name  */}
-          <div className=" flex justify-between w-full">
-            <span className=" flex flex-col gap-2 w-[48%]">
+          <div className=" flex gap-5 xs:gap-0 flex-col xs:flex-row xs:justify-between w-full">
+            <span className=" flex flex-col gap-2 xs:w-[48%]">
               <label className=" opacity-80 capitalize" htmlFor="first_name">
                 First Name
               </label>
@@ -66,7 +77,7 @@ const Signup = () => {
               )}
             </span>
 
-            <span className=" flex flex-col gap-2 w-[48%]">
+            <span className=" flex flex-col gap-2 xs:w-[48%]">
               <label className=" opacity-80 capitalize" htmlFor="last_name">
                 Last Name
               </label>
@@ -175,7 +186,7 @@ const Signup = () => {
 
           <div className=" text-sm flex gap-2">
             <p>Already have an account?</p>
-            <Link to={'/sign-in'}>
+            <Link to={"/log-in"}>
               <span className="underline select-none cursor-pointer">
                 Log in
               </span>

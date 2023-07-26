@@ -1,7 +1,14 @@
+// * react
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
+
+// * react router dom
 import { Link, useNavigate } from "react-router-dom";
+
+// * react hook form
+import { useForm } from "react-hook-form";
+
+// * react hot toast
+import { toast } from "react-hot-toast";
 
 const Signin = () => {
   const [loginErr, setLoginErr] = useState("");
@@ -23,19 +30,25 @@ const Signin = () => {
       localStorage.setItem("shopcart-UAI", JSON.stringify(UAI));
       toast.success("Successfully Log in!");
       navigate("/products");
-      //   console.log(UAI);
     } else {
       setLoginErr("Email or password wrong");
-      toast.error("Cannot Log in");
+      toast.error("Cannot log in");
     }
   };
 
   return (
     <>
-      <div className=" bg-[url(https://images.pexels.com/photos/236910/pexels-photo-236910.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] p-5 sm:p-10 w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden overflow-y-scroll">
+      <div className=" bg-[url(https://images.pexels.com/photos/236910/pexels-photo-236910.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] relative flex items-center justify-center p-3 xs:p-10 w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden overflow-y-scroll">
+        <Link to={"/products"}>
+          <button className="absolute top-5 left-10 text-slate-50 tracking-widest font-light italic">
+            Go to shop . . .
+          </button>
+        </Link>
+
+        {/* log in form  */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className=" max-w-[350px] mx-auto w-full p-5 sm:p-10 flex flex-col gap-5 glass-2 rounded-3xl"
+          className="max-w-[350px] mx-auto w-full h-fit p-7 xs:p-10 flex flex-col gap-5 glass-2 rounded-3xl"
         >
           {/* title  */}
           <h1 className=" text-2xl font-2 font-bold w-full text-center">
@@ -115,8 +128,8 @@ const Signin = () => {
             </Link>
           </section>
 
-          <button className=" uppercase btn-1 bg-teal-800 w-fit text-slate-50 mx-auto">
-            Register now
+          <button className=" w-[10rem] uppercase btn-1 bg-teal-800 text-slate-50 mx-auto">
+            Log in
           </button>
         </form>
         {/* </div> */}

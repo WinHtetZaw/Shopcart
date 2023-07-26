@@ -30,16 +30,18 @@ import AccSettingLayout from "./layouts/AccSettingLayout";
 import Signup from "./account/Signup";
 import Signin from "./account/Signin";
 import ForgotPw from "./account/ForgotPw";
+import ProductDetailLayout from "./layouts/ProductDetailLayout";
+import CategoryLayout from "./layouts/CategoryLayout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="register" element={<Signup />} />
-      <Route path="sign-in" element={<Signin />} />
+      <Route path="log-in" element={<Signin />} />
       <Route path="password-recovery" element={<ForgotPw />} />
 
       <Route path="/" element={<RootLayout />} errorElement={<NotFound />}>
-        <Route index element={<Home />} />
+        <Route index element={<Home />} breadcrumb="apple" />
 
         <Route path="account" element={<AccountLayout />}>
           <Route index element={<Dashboard />} />
@@ -51,12 +53,14 @@ const router = createBrowserRouter(
 
         <Route path="products" element={<ProductLayout />}>
           <Route index element={<AllProducts />} />
-          <Route path="category/:name" element={<FilterCategory />} />
-          <Route path="detail/:id" element={<ProductDetail />} />
+          <Route path="category" element={<CategoryLayout />}>
+            <Route path=":name" element={<FilterCategory />} />
+          </Route>
+          <Route path=":id" element={<ProductDetailLayout />}>
+            <Route index element={<ProductDetail />} />
+          </Route>
           <Route path="search" element={<SearchPage />} />
         </Route>
-
-        {/* <Route path="checkout" element={<Checkout />} /> */}
 
         <Route path="cart" element={<CartLayout />}>
           <Route index element={<Cart />} />

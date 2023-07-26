@@ -32,8 +32,8 @@ const Aside = () => {
 
   console.log(location.pathname);
   return (
-    <div className=" w-2/12 h-full">
-      <div className=" mt-3">
+    <div className=" w-full min-h-[85vh] bg-white pt-3">
+      <div className="">
         <RiMenu2Line className=" text-2xl ml-auto mr-5" />
       </div>
 
@@ -50,7 +50,7 @@ const Aside = () => {
         </Link>
 
         <Link to={"/account/favorite"}>
-        <div
+          <div
             className={`sidebar-item ${
               currentRouteRef.current == "favorite" && "active"
             }`}
@@ -61,7 +61,7 @@ const Aside = () => {
         </Link>
 
         <Link to={"/account/setting"}>
-        <div
+          <div
             className={`sidebar-item ${
               currentRouteRef.current == "setting" && "active"
             }`}

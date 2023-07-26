@@ -1,5 +1,11 @@
+// * react router dom
+import { Link } from "react-router-dom";
+
+// icons
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { GoTrash } from "react-icons/go";
+
+// * react redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   addQuantityPriceCalc,
@@ -7,7 +13,8 @@ import {
   removeAll,
   removeFromCart,
 } from "../redux/features/cartSlice";
-import { Link } from "react-router-dom";
+
+// components
 import BackBtn from "../components/BackBtn";
 
 const Cart = () => {
@@ -97,7 +104,7 @@ const Cart = () => {
 
   return (
     <>
-    <BackBtn/>
+      <BackBtn />
       {storedCart?.products.length > 0 ? (
         <div className=" flex flex-col lg:flex-row gap-10 md:gap-16 py-10 md:pb-16">
           {/* cart list table  */}
@@ -119,10 +126,7 @@ const Cart = () => {
             <table className=" w-full">
               <thead className=" w-full">
                 <tr className=" w-full uppercase bdr-b">
-                  <th className=" w-1/12 py-3">
-                    No.
-                    {/* <Checkbox onChange={handleCheckChange} color="cyan" /> */}
-                  </th>
+                  <th className=" w-1/12 py-3">No.</th>
                   <th className=" w-6/12 text-start">product</th>
                   <th className=" w-3/12">quantity</th>
                   <th className=" w-2/12 text-end">price</th>
@@ -182,8 +186,9 @@ const Cart = () => {
           </section>
         </div>
       ) : (
-        <div className=" w-full h-[90vh] flex items-center justify-center">
-          <p className="card-1 w-[70%] flex flex-col font-mono bg-slate-50">
+        // if cart is empty show text
+        <div className=" w-full h-[90vh]">
+          <p className="shadow-2 p-10 w-[70%] mx-auto mt-16 flex flex-col font-mono bg-slate-50">
             <span className=" font-semibold lg:text-lg mb-3">
               Your Cart is Empty
             </span>

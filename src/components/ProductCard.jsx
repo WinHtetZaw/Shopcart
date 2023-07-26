@@ -35,8 +35,8 @@ const ProductCard = (props) => {
   )?.currentProduct;
 
   let storedFavorite;
-  if (localStorage.getItem("storedFavorite")) {
-    storedFavorite = JSON.parse(localStorage.getItem("storedFavorite"));
+  if (localStorage.getItem("stored-favorite")) {
+    storedFavorite = JSON.parse(localStorage.getItem("stored-favorite"));
   }
 
   const isCurrentProduct = currentProduct?.find(
@@ -87,7 +87,10 @@ const ProductCard = (props) => {
   };
 
   return (
-    <div className=" relative bg-white">
+    <div
+      onClick={() => navigate(`/products/${id}`)}
+      className=" relative bg-white"
+    >
       {/* favorite icon  */}
       <div className=" absolute top-2 right-2 bg-white p-1 rounded-full">
         {currentFavoriteProduct ? (

@@ -6,8 +6,8 @@ const initialState = {
 };
 
 let storedFavorite;
-if (JSON.parse(localStorage.getItem("storedFavorite"))?.length > 0) {
-  storedFavorite = JSON.parse(localStorage.getItem("storedFavorite"));
+if (JSON.parse(localStorage.getItem("stored-favorite"))?.length > 0) {
+  storedFavorite = JSON.parse(localStorage.getItem("stored-favorite"));
   initialState.favoriteProducts = storedFavorite;
 }
 
@@ -26,7 +26,7 @@ export const favoriteSlice = createSlice({
       state.favoriteProducts = [...state.favoriteProducts, payload];
 
       localStorage.setItem(
-        "storedFavorite",
+        "stored-favorite",
         JSON.stringify(state.favoriteProducts)
       );
     },
@@ -35,7 +35,7 @@ export const favoriteSlice = createSlice({
       state.favoriteProducts = lists;
 
       localStorage.setItem(
-        "storedFavorite",
+        "stored-favorite",
         JSON.stringify(state.favoriteProducts)
       );
     },

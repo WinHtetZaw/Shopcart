@@ -1,9 +1,22 @@
+// * react
 import { useState } from "react";
+
+// * icons
 import { GoPerson } from "react-icons/go";
+
+// * react router dom
 import { Link } from "react-router-dom";
 
 const Profile = () => {
+  // * hooks
   const [isOpen, setIsOpen] = useState(false);
+
+  // * local storage
+  let shopcartUai;
+  if (localStorage.getItem("shopcart-UAI")) {
+    shopcartUai = JSON.parse(localStorage.getItem("shopcart-UAI"));
+  }
+  // shopcartUai && console.log(shopcartUai);
 
   return (
     <div
@@ -20,9 +33,13 @@ const Profile = () => {
           <Link to={"/account"}>
             <li className=" dropdown-item">Account</li>
           </Link>
-          <Link to={"/register"}>
-            <li className=" dropdown-item">Sign up</li>
-          </Link>
+          {shopcartUai?.token ? (
+            <li className=" dropdown-item">Log out</li>
+          ) : (
+            <Link to={"/log-in"}>
+              <li className=" dropdown-item">Log in</li>
+            </Link>
+          )}
         </ul>
       )}
     </div>
