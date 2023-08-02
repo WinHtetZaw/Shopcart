@@ -9,7 +9,7 @@ import { GoTrash } from "react-icons/go";
 import { RiMenu2Line } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
 
-const Aside = () => {
+const Aside = ({ isOpened, setIsOpened }) => {
   // * hooks
   const location = useLocation();
   const currentRouteRef = useRef();
@@ -30,10 +30,10 @@ const Aside = () => {
     }
   }
 
-  console.log(location.pathname);
+  // console.log(location.pathname);
   return (
-    <div className=" w-full min-h-[85vh] bg-white pt-3">
-      <div className="">
+    <div className=" w-full h-full bg-white pt-3">
+      <div className="" onClick={() => setIsOpened(!isOpened)}>
         <RiMenu2Line className=" text-2xl ml-auto mr-5" />
       </div>
 
@@ -45,7 +45,7 @@ const Aside = () => {
             }`}
           >
             <AiOutlineHome className="text-lg" />
-            <span>DashBoard</span>
+            <span className={`${isOpened && "hidden"}`}>DashBoard</span>
           </div>
         </Link>
 
@@ -56,7 +56,7 @@ const Aside = () => {
             }`}
           >
             <AiOutlineHeart className="text-lg" />
-            <span className=" whitespace-nowrap">Favorite</span>
+            <span className={`${isOpened && "hidden"}`}>Favorite</span>
           </div>
         </Link>
 
@@ -67,13 +67,13 @@ const Aside = () => {
             }`}
           >
             <AiOutlineSetting className="text-lg" />
-            <span>Setting</span>
+            <span className={`${isOpened && "hidden"}`}>Setting</span>
           </div>
         </Link>
 
         {/* <div className="sidebar-item text-red-500">
           <GoTrash className="text-lg" />
-          <span className=" whitespace-nowrap">Delete Account</span>
+          <span className=" ">Delete Account</span>
         </div> */}
       </section>
     </div>

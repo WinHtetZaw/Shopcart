@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+// * react
+import { useState } from "react";
+
+// * react router
+import { Link, useNavigate } from "react-router-dom";
+
+// * icons
 import { IoIosArrowDown } from "react-icons/io";
+
+// * react redux
 import { useGetAllCategoriesQuery } from "../redux/services/productApi";
 import { useDispatch } from "react-redux";
 import { searchByCategory } from "../redux/features/generalSlice";
-import { Link, useNavigate } from "react-router-dom";
+
+// animation
+import { AnimatePresence, motion } from "framer-motion";
 
 const Category = () => {
+  // * hooks
   const [isOpen, setIsOpen] = useState(false);
   const { data, isLoading, isSuccess } = useGetAllCategoriesQuery();
 
@@ -24,25 +35,29 @@ const Category = () => {
         </span>
 
         {/* drop area  */}
+        <AnimatePresence>
         {isOpen && (
-          <ul className="dropdown-area-1 top-10 font-1 right-0 h-[50vh] overflow-y-scroll">
+          <motion.ul
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="dropdown-area-1 top-10 font-1 left-0 xs:right-0 h-[50vh] overflow-y-scroll"
+          >
             <li className=" text-sm opacity-50 text-center font-bold">
               Category List
             </li>
             <Link to={"/products"}>
-              <li className=" mt-3 px-3 py-2 rounded-sm select-none cursor-pointer hover:bg-gray-100">
-                Show All
-              </li>
+              <li className="dropdown-item mt-3">Show All</li>
             </Link>
             {data?.map((el, index) => (
               <Link key={index} to={`/products/category/${el}`}>
-                <li className="dropdown-item">
-                  {el}
-                </li>
+                <li className="dropdown-item">{el}</li>
               </Link>
             ))}
-          </ul>
+          </motion.ul>
         )}
+        </AnimatePresence>
       </div>
     </>
   );

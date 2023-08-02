@@ -1,23 +1,23 @@
-import { Outlet } from "react-router-dom";
+// * react router dom
+import { Outlet, useLocation } from "react-router-dom";
+
+// * components
 import Navbar from "../navbar/Navbar";
 import Foot from "../components/Foot";
-import { useSelector } from "react-redux";
-
-// ${!scrollable ? "h-screen overflow-hidden" : "overflow-auto"}
 
 const RootLayout = () => {
-  const { scrollable } = useSelector((state) => state.generalSlice);
-  // console.log("scrollable ---> ", scrollable);
+  // * hooks
+  const location = useLocation();
   return (
     <div className="h-screen overflow-y-scroll scroll-smooth">
-      <nav>
+      <nav className={`${location.pathname === "/" && "hidden"}`}>
         <Navbar />
       </nav>
       {/* <main className=" min-h-[55vh] px-3 md:px-10"> */}
       <main className="min-h-[70vh]">
         <Outlet />
       </main>
-      <footer>
+      <footer className={`${location.pathname === "/" && "hidden"}`}>
         <Foot />
       </footer>
     </div>

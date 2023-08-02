@@ -25,8 +25,8 @@ const ForgotPwForm = () => {
   // ? UAI ---> user account information
   const onSubmit = (data) => {
     const UAI = JSON.parse(localStorage.getItem("shopcart-UAI"));
-    console.log(UAI);
-    console.log(data);
+    // console.log(UAI);
+    // console.log(data);
     if (
       UAI &&
       data.email === UAI.email &&

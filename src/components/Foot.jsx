@@ -1,10 +1,10 @@
-import { BiLogoVisa } from "react-icons/bi";
-
 const Foot = () => {
   return (
     <div className="flex w-full h-full bg-[#dee4eb] p-3 xs:p-5 lg:py-10 lg:px-14">
       <article className=" md:px-5 w-5/12">
-        <h1 className="md:text-lg tracking-widest mb-3 font-bold font-2">ShopCart</h1>
+        <h1 className="md:text-lg tracking-widest mb-3 font-bold font-2">
+          ShopCart
+        </h1>
         <p className=" tracking-wider text-sm opacity-60">
           Specializes in providing hight-quality, stylish products for your
           wardrobe
@@ -38,12 +38,15 @@ const Foot = () => {
         <section className="">
           <h2 className=" heading-3 mb-3">payment methods</h2>
           <ul className=" flex items-center gap-3">
-
             <li className=" select-none cursor-pointer">
               <img className=" w-7" src="/png/visa.png" alt="" />
             </li>
             <li className=" select-none cursor-pointer">
-              <img className=" w-14 h-5 object-cover" src="/png/paypal.png" alt="" />
+              <img
+                className=" w-14 h-5 object-cover"
+                src="/png/paypal.png"
+                alt=""
+              />
             </li>
           </ul>
         </section>

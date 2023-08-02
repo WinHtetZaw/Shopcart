@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   categoryName: "",
   scrollable: true,
+  isLogin: false,
 };
 
 export const generalSlice = createSlice({
@@ -22,9 +23,16 @@ export const generalSlice = createSlice({
         state.scrollable = !state.scrollable;
       }
     },
+    setIsLogin: (state, { payload }) => {
+      if (payload) {
+        state.isLogin = payload;
+      } else {
+        state.isLogin = !state.isLogin;
+      }
+    },
   },
 });
 
-export const { searchByCategory, setScrollable } =
+export const { searchByCategory, setScrollable, setIsLogin } =
   generalSlice.actions;
 export default generalSlice.reducer;

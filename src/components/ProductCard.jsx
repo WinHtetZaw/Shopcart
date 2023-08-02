@@ -1,6 +1,9 @@
 // * react
 import { useEffect, useState } from "react";
 
+// * animation
+import { motion } from "framer-motion";
+
 // * react router dom
 import { Link, useNavigate } from "react-router-dom";
 
@@ -14,11 +17,13 @@ import { BsCartPlus, BsCartDash } from "react-icons/bs";
 // * rtk
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../redux/features/cartSlice";
-import { toast } from "react-hot-toast";
 import {
   addToFavorite,
   removeFromFavorite,
 } from "../redux/features/favoriteSlice";
+
+// * alert notification
+import { toast } from "react-hot-toast";
 
 const ProductCard = (props) => {
   const { id, title, thumbnail, description, category, rating, price } = props;
@@ -51,39 +56,33 @@ const ProductCard = (props) => {
 
   // currentFavoriteProduct && console.log(currentFavoriteProduct);
 
-  useEffect(() => {
-    if (isCurrentProduct) {
-      setIsAdded(true);
-    }
-    if (currentFavoriteProduct) {
-      setIsFavorite(true);
-    }
-  }, []);
-
   // * handles
-  const handleAddToCartClick = (product) => {
+  const handleAddToCartClick = (e, product) => {
+    e.stopPropagation();
     setIsAdded(true);
     dispatch(addToCart(product));
     toast.success("Successfully added");
   };
 
-  const handleRemoveFromCartClick = (product) => {
+  const handleRemoveFromCartClick = (e, product) => {
+    e.stopPropagation();
     setIsAdded(false);
     dispatch(removeFromCart(product));
-    toast.success("Successfully remove");
+    toast.success("Successfully removed");
   };
 
   const handleAddFavoriteClick = (e, product) => {
     e.stopPropagation();
     setIsFavorite(true);
     dispatch(addToFavorite(product));
+    toast.success("Successfully added");
   };
 
   const handleRemoveFavoriteClick = (e, product) => {
     e.stopPropagation();
     setIsFavorite(false);
     dispatch(removeFromFavorite(product));
-    console.log("remove");
+    toast.success("Successfully removed");
   };
 
   return (
@@ -92,7 +91,7 @@ const ProductCard = (props) => {
       className=" relative bg-white"
     >
       {/* favorite icon  */}
-      <div className=" absolute top-2 right-2 bg-white p-1 rounded-full">
+      <div className=" absolute z-0 top-2 right-2 bg-white p-1 rounded-full">
         {currentFavoriteProduct ? (
           <AiFillHeart
             onClick={(e) => handleRemoveFavoriteClick(e, props)}
@@ -103,20 +102,32 @@ const ProductCard = (props) => {
         )}
       </div>
 
-      {/* img  */}
-      {/* <Link to={`/products/detail/${id}`}> */}
-      <div className=" rounded-lg w-full aspect-square bg-gray-100">
-        <img className=" object-contain w-full h-full" src={thumbnail} alt="" />
-      </div>
-      {/* </Link> */}
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.2, ease: "easeIn" }}
+        className="relative hover:shadow-4 transition duration-200 rounded-lg w-full aspect-square bg-gray-100"
+      >
+        <img
+          className=" object-contain w-full h-full"
+          src={thumbnail}
+          alt={title}
+        />
+      </motion.div>
 
       <section className=" flex gap-2 mt-2 flex-col">
         <span className=" font-semibold flex flex-col sm:flex-row justify-between sm:items-center">
+          {/* title  */}
           <h3 className=" font-2 w-full truncate">{title}</h3>
+
+          {/* price  */}
           <p className="">${price}</p>
         </span>
+
+        {/* description */}
         <p className=" text-sm opacity-70 w-full truncate">{description}</p>
 
+        {/* start rating  */}
         <div className=" flex flex-col gap-3">
           <Rating
             color="rgb(17 94 89)"
@@ -126,14 +137,14 @@ const ProductCard = (props) => {
           />
           {!isCurrentProduct ? (
             <button
-              onClick={() => handleAddToCartClick(props)}
+              onClick={(e) => handleAddToCartClick(e, props)}
               className="active:scale-95 transition duration-200 text-xl"
             >
               <BsCartPlus />
             </button>
           ) : (
             <button
-              onClick={() => handleRemoveFromCartClick(props)}
+              onClick={(e) => handleRemoveFromCartClick(e, props)}
               className="active:scale-95 transition duration-200 text-xl text-orange-500"
             >
               <BsCartDash />

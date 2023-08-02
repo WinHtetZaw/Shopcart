@@ -4,9 +4,10 @@ import { Rating } from "@mantine/core";
 // * icons
 import { GoTrash } from "react-icons/go";
 import { useDispatch } from "react-redux";
-import { removeFromFavorite } from "../redux/features/favoriteSlice";
+import { removeAll, removeFromFavorite } from "../redux/features/favoriteSlice";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AddNewBtn from "../components/addNewBtn";
 
 const Favorite = () => {
   // * hooks
@@ -19,7 +20,7 @@ const Favorite = () => {
   if (localStorage.getItem("stored-favorite")) {
     storedFavorite = JSON.parse(localStorage.getItem("stored-favorite"));
   }
-  storedFavorite && console.log(storedFavorite);
+  // storedFavorite && console.log(storedFavorite);
 
   useEffect(() => {
     if (storedFavorite) {
@@ -35,9 +36,20 @@ const Favorite = () => {
     dispatch(removeFromFavorite(product));
   };
 
+  const handleRemoveAll = () => {
+    dispatch(removeAll());
+    setIsRemoved(true);
+  };
+
+  // ${
+  //   storedFavorite.length > 2
+  //     ? "odd:bg-[#e9f0ff] hover:even:bg-[#f4f7ff]"
+  //     : "hover:bg-[#f4f7ff]"
+  // }
+
   const listsLooping = storedFavorite?.map((el, index) => (
     <div
-      className="grid grid-cols-12 items-center w-full text-sm even:bg-[#e9f0ff] hover:odd:bg-[#f4f7ff] transition duration-200"
+      className={`grid grid-cols-12 items-center w-full shadow hover:shadow-2 rounded transition duration-200`}
       key={index}
       onClick={() => navigate(`/products/${el.id}`)}
     >
@@ -85,22 +97,40 @@ const Favorite = () => {
       <section className=" flex justify-between mb-5">
         <h3 className=" font-2">Favorite List</h3>
         {storedFavorite?.length > 0 && (
-          <button className="text-sm italic text-red-500">Remove All</button>
+          <button
+            onClick={handleRemoveAll}
+            className="text-sm italic text-red-500"
+          >
+            Remove All
+          </button>
         )}
       </section>
 
-      {/* main  */}
-      <section className=" w-full flex flex-col mb-5">{listsLooping}</section>
+      {storedFavorite?.length > 0 ? (
+        <div className="">
+          {/* main  */}
+          <section className=" w-full flex flex-col gap-y-5 mb-5 mt-10">
+            {listsLooping}
+          </section>
 
-      {/* foot  */}
-      <section className=" flex justify-between">
-        <div className="flex">{`Total - ${storedFavorite?.length}`}</div>
-        <Link to={'/products'}>
-          <button className="text-sm italic hover:underline opacity-90">
-            Add More
-          </button>
-        </Link>
-      </section>
+          {/* foot  */}
+          <section className=" flex justify-between">
+            <div className="flex">{`Total - ${storedFavorite?.length}`}</div>
+            <Link to={"/products"}>
+              <AddNewBtn />
+            </Link>
+          </section>
+        </div>
+      ) : (
+        <div className=" ml-5">
+          <h2>No Favorite Items</h2>
+          <Link to={"/products"}>
+            <button className=" text-sm underline mt-5">
+              Go & Add Items to Favorite
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

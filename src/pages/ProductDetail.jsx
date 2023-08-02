@@ -1,11 +1,11 @@
+// * react
+import { useEffect, useState } from "react";
+
+// * react router dom
 import { useNavigate, useParams } from "react-router-dom";
+
+// * react redux
 import { useGetSingleProductQuery } from "../redux/services/productApi";
-import { Rating } from "@mantine/core";
-import { BiMinus, BiPlus } from "react-icons/bi";
-import { PiTruckLight } from "react-icons/pi";
-import { AiOutlineCalendar } from "react-icons/ai";
-import { BsCartPlus, BsCartDash } from "react-icons/bs";
-import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import {
   addQuantityPriceCalc,
@@ -13,7 +13,20 @@ import {
   reduceQuantityPriceCalc,
   removeFromCart,
 } from "../redux/features/cartSlice";
-import { useEffect, useState } from "react";
+
+// * mantine ui library
+import { Rating } from "@mantine/core";
+
+// * alert notification
+import { toast } from "react-hot-toast";
+
+// * icons
+import { BiMinus, BiPlus } from "react-icons/bi";
+import { PiTruckLight } from "react-icons/pi";
+import { AiOutlineCalendar } from "react-icons/ai";
+import { BsCartPlus, BsCartDash } from "react-icons/bs";
+
+// * components
 import BackBtn from "../components/BackBtn";
 
 const ProductDetail = () => {
@@ -46,22 +59,24 @@ const ProductDetail = () => {
     if (currentProduct) {
       setQuantity(currentItemQuantity);
     }
-  }, [quantity]);
+  }, [quantity, isAdded]);
 
   // * handles
   const handleAddToCartClick = (product) => {
     setIsAdded(true);
     dispatch(addToCart(product));
+    toast.success("Successfully added");
   };
 
   const handleRemoveFromCartClick = (product) => {
     setIsAdded(false);
     dispatch(removeFromCart(product));
+    toast.success("Successfully removed");
   };
 
   const handleBuyNowClick = (product) => {
     dispatch(addToCart(product));
-    navigate("/cart/checkout");
+    navigate("/cart");
   };
 
   const handlePlusClick = (product) => {
@@ -77,7 +92,7 @@ const ProductDetail = () => {
 
   return (
     <>
-    <BackBtn/>
+      <BackBtn />
       <div className="py-10 flex flex-col md:flex-row gap-10">
         {/* left  */}
         <section className="w-full xs:w-[70%] md:w-1/2">
@@ -143,7 +158,7 @@ const ProductDetail = () => {
                 </span>{" "}
                 left!
               </span>
-              <span className=" block"> Don&apos;t miss it</span>
+              <span className=" block"> Don&apos;t miss it.</span>
             </h6>
           </section>
           <div className=" w-full flex gap-5 mb-7">

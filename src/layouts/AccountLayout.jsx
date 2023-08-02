@@ -1,13 +1,15 @@
 import { Outlet } from "react-router-dom";
 import Aside from "../account/Aside";
+import { useState } from "react";
 
 const AccountLayout = () => {
+  const [isOpened, setIsOpened] = useState(false);
   return (
-    <div className="grid grid-cols-12 gap-7 w-full min-h-[85vh] bg-gray-100">
-      <div className=" col-span-2">
-        <Aside />
+    <div className="flex gap-7 w-full min-h-[85vh] bg-gray-100">
+      <div className={`${isOpened ? "w-[100px]" : "w-[200px]"} min-h-[85vh]`}>
+        <Aside isOpened={isOpened} setIsOpened={setIsOpened} />
       </div>
-      <div className=" col-span-10">
+      <div className={`${isOpened ? " w-full" : " w-full"} h-full`}>
         <Outlet />
       </div>
     </div>

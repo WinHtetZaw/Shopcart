@@ -9,10 +9,14 @@ import { useForm } from "react-hook-form";
 
 // * react hot toast
 import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setIsLogin } from "../redux/features/generalSlice";
+import { setUaiToStorage } from "../components/helper";
 
 const Signin = () => {
   const [loginErr, setLoginErr] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -24,11 +28,14 @@ const Signin = () => {
 
   // * UAI ---> user account information
   const onSubmit = (data) => {
+    // const UAI = JSON.parse(localStorage.getItem("shopcart-UAI"));
     const UAI = JSON.parse(localStorage.getItem("shopcart-UAI"));
     if (UAI && data.email === UAI.email && data.password === UAI.password) {
       UAI.auth = true;
-      localStorage.setItem("shopcart-UAI", JSON.stringify(UAI));
+      setUaiToStorage(UAI);
+      // localStorage.setItem("shopcart-UAI", JSON.stringify(UAI));
       toast.success("Successfully Log in!");
+      dispatch(setIsLogin(true));
       navigate("/products");
     } else {
       setLoginErr("Email or password wrong");

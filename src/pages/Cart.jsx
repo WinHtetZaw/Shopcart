@@ -16,6 +16,7 @@ import {
 
 // components
 import BackBtn from "../components/BackBtn";
+import AddNewBtn from "../components/addNewBtn";
 
 const Cart = () => {
   const { cartProducts } = useSelector((state) => state.cartSlice);
@@ -109,8 +110,9 @@ const Cart = () => {
         <div className=" flex flex-col lg:flex-row gap-10 md:gap-16 py-10 md:pb-16">
           {/* cart list table  */}
           <section className="md:p-10 overflow-x-scroll sm:overflow-x-hidden text-sm p-5 w-full lg:w-2/3 shadow-4 rounded-lg">
+            {/* title  */}
             <div className=" flex justify-between items-center mb-3">
-              <h2 className=" text-xl font-2 relative after-underline font-bold capitalize">
+              <h2 className=" text-xl font-2 relative font-bold capitalize">
                 cart table
               </h2>
 
@@ -123,6 +125,7 @@ const Cart = () => {
               </button>
             </div>
 
+            {/* table  */}
             <table className=" w-full">
               <thead className=" w-full">
                 <tr className=" w-full uppercase bdr-b">
@@ -144,6 +147,12 @@ const Cart = () => {
                 </tr>
               </tfoot>
             </table>
+
+            <div className=" ml-auto w-fit mt-5">
+              <Link to={"/products"}>
+                <AddNewBtn/>
+              </Link>
+            </div>
           </section>
 
           {/* left  */}
@@ -188,7 +197,7 @@ const Cart = () => {
       ) : (
         // if cart is empty show text
         <div className=" w-full h-[90vh]">
-          <p className="shadow-2 p-10 w-[70%] mx-auto mt-16 flex flex-col font-mono bg-slate-50">
+          <p className="shadow-4 p-10 w-[70%] rounded-3xl mx-auto mt-16 flex flex-col font-mono">
             <span className=" font-semibold lg:text-lg mb-3">
               Your Cart is Empty
             </span>
