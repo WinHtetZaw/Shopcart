@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getLocalStorage, setLocalStorage } from "../../helper/helper";
 
 const initialState = {
-  //   favorite: false,
   favoriteProducts: [],
 };
 
 let storedFavorite;
-if (JSON.parse(localStorage.getItem("stored-favorite"))?.length > 0) {
-  storedFavorite = JSON.parse(localStorage.getItem("stored-favorite"));
+if (getLocalStorage("stored-favorite")?.length > 0) {
+  storedFavorite = getLocalStorage("stored-favorite");
   initialState.favoriteProducts = storedFavorite;
 }
 
@@ -25,20 +25,16 @@ export const favoriteSlice = createSlice({
 
       state.favoriteProducts = [...state.favoriteProducts, payload];
 
-      localStorage.setItem(
-        "stored-favorite",
-        JSON.stringify(state.favoriteProducts)
-      );
+      setLocalStorage("stored-favorite", state.favoriteProducts);
     },
+
     removeFromFavorite: (state, { payload }) => {
       const lists = state.favoriteProducts.filter((el) => el.id != payload.id);
       state.favoriteProducts = lists;
 
-      localStorage.setItem(
-        "stored-favorite",
-        JSON.stringify(state.favoriteProducts)
-      );
+      setLocalStorage("stored-favorite", state.favoriteProducts);
     },
+
     removeAll: (state) => {
       state.favoriteProducts = [];
       localStorage.removeItem("stored-favorite");
@@ -46,6 +42,6 @@ export const favoriteSlice = createSlice({
   },
 });
 
-export const { setFavorite, addToFavorite, removeFromFavorite, removeAll } =
+export const { addToFavorite, removeFromFavorite, removeAll } =
   favoriteSlice.actions;
 export default favoriteSlice.reducer;

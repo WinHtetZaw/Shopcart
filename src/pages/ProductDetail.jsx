@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 // * react redux
 import { useGetSingleProductQuery } from "../redux/services/productApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addQuantityPriceCalc,
   addToCart,
@@ -28,12 +28,16 @@ import { BsCartPlus, BsCartDash } from "react-icons/bs";
 
 // * components
 import BackBtn from "../components/BackBtn";
+import GuestAlert from "../components/GuestAlert";
+import { UAI } from "../helper/helper";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { data, isLoading, isSuccess } = useGetSingleProductQuery(id);
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const { isLogin } = useSelector((state) => state.generalSlice);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -59,33 +63,64 @@ const ProductDetail = () => {
     if (currentProduct) {
       setQuantity(currentItemQuantity);
     }
-  }, [quantity, isAdded]);
+  }, [isCurrentProduct, currentProduct, currentItemQuantity]);
 
   // * handles
   const handleAddToCartClick = (product) => {
+    if (!UAI.auth || !isLogin) {
+      toast.custom((t) => <GuestAlert t={t} />);
+      return;
+    }
+
     setIsAdded(true);
     dispatch(addToCart(product));
     toast.success("Successfully added");
   };
 
   const handleRemoveFromCartClick = (product) => {
+    if (!UAI.auth || !isLogin) {
+      toast.custom((t) => <GuestAlert t={t} />);
+      return;
+    }
     setIsAdded(false);
     dispatch(removeFromCart(product));
     toast.success("Successfully removed");
   };
 
   const handleBuyNowClick = (product) => {
+    if (!UAI.auth || !isLogin) {
+      toast.custom((t) => <GuestAlert t={t} />);
+      return;
+    }
     dispatch(addToCart(product));
     navigate("/cart");
   };
 
   const handlePlusClick = (product) => {
-    handleAddToCartClick(product);
+    if (!UAI.auth || !isLogin) {
+      toast.custom((t) => <GuestAlert t={t} />);
+      return;
+    }
+    if (!isCurrentProduct) {
+      toast.error("Add to cart first!");
+      return
+    }
+
+    // handleAddToCartClick(product);
     dispatch(addQuantityPriceCalc(product));
     setQuantity((pre) => pre + 1);
   };
 
   const handleMinusClick = (product) => {
+    if (!UAI.auth || !isLogin) {
+      toast.custom((t) => <GuestAlert t={t} />);
+      return;
+    }
+
+    if (!isCurrentProduct) {
+      toast.error("Add to cart first!");
+      return
+    }
     dispatch(reduceQuantityPriceCalc(product));
     setQuantity((pre) => pre - 1);
   };

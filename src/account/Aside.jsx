@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useRef } from "react";
 import {
   AiOutlineHome,
@@ -8,6 +9,7 @@ import {
 import { GoTrash } from "react-icons/go";
 import { RiMenu2Line } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
+import { sidebarItemVariant } from "../helper/animationHelper";
 
 const Aside = ({ isOpened, setIsOpened }) => {
   // * hooks
@@ -44,8 +46,20 @@ const Aside = ({ isOpened, setIsOpened }) => {
               currentRouteRef.current == "account" && "active"
             }`}
           >
-            <AiOutlineHome className="text-lg" />
-            <span className={`${isOpened && "hidden"}`}>DashBoard</span>
+            <AiOutlineHome className="text-lg min-w-[18px]" />
+            <AnimatePresence>
+              {!isOpened && (
+                <motion.span
+                  variants={sidebarItemVariant}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
+                  className=" origin-left"
+                >
+                  DashBoard
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
         </Link>
 
@@ -55,8 +69,19 @@ const Aside = ({ isOpened, setIsOpened }) => {
               currentRouteRef.current == "favorite" && "active"
             }`}
           >
-            <AiOutlineHeart className="text-lg" />
-            <span className={`${isOpened && "hidden"}`}>Favorite</span>
+            <AiOutlineHeart className="text-lg min-w-[18px]" />
+            <AnimatePresence></AnimatePresence>
+            {!isOpened && (
+              <motion.span
+                variants={sidebarItemVariant}
+                initial="hidden"
+                animate="show"
+                exit="exit"
+                className=" origin-left"
+              >
+                Favorite
+              </motion.span>
+            )}
           </div>
         </Link>
 
@@ -66,13 +91,24 @@ const Aside = ({ isOpened, setIsOpened }) => {
               currentRouteRef.current == "setting" && "active"
             }`}
           >
-            <AiOutlineSetting className="text-lg" />
-            <span className={`${isOpened && "hidden"}`}>Setting</span>
+            <AiOutlineSetting className="text-lg min-w-[18px]" />
+            <AnimatePresence></AnimatePresence>
+            {!isOpened && (
+              <motion.span
+                variants={sidebarItemVariant}
+                initial="hidden"
+                animate="show"
+                exit="exit"
+                className=" origin-left"
+              >
+                Setting
+              </motion.span>
+            )}
           </div>
         </Link>
 
         {/* <div className="sidebar-item text-red-500">
-          <GoTrash className="text-lg" />
+          <GoTrash className="text-lg min-w-[18px]" />
           <span className=" ">Delete Account</span>
         </div> */}
       </section>

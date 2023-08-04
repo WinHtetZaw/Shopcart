@@ -1,14 +1,26 @@
+// * react
+import { useState } from "react";
+
 // * react router dom
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // * react hook form
 import { useForm } from "react-hook-form";
 
-// * react hot toast
+// * alert notification
 import { toast } from "react-hot-toast";
 
+// * icons
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { setLocalStorage } from "../helper/helper";
+
 const Signup = () => {
+  const [show, setShow] = useState({
+    _password: false,
+    _passwordConfirmation: false,
+  });
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     handleSubmit,
@@ -34,24 +46,30 @@ const Signup = () => {
       auth: false,
       token,
     };
-    localStorage.setItem("shopcart-UAI", JSON.stringify(UAI));
+    setLocalStorage("shopcart-UAI", UAI);
     toast.success("Successfully register!");
-    navigate("/log-in");
+    navigate("/log-in", { state: location.pathname });
   };
 
   return (
     <>
       <div className=" bg-[url(https://images.pexels.com/photos/236910/pexels-photo-236910.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] relative p-3 xs:p-10 w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden overflow-y-scroll">
-
         <Link to={"/products"}>
-          <button className="absolute top-5 left-10 text-slate-50 tracking-widest font-light italic">
-            Go to shop . . .
+          <button className="absolute top-5 left-10 link-btn">
+            Go to shop
           </button>
         </Link>
 
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-10 left-10 link-btn"
+        >
+          Go Back
+        </button>
+
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className=" max-w-[500px] mx-auto w-full p-7 xs:p-10 flex flex-col gap-5 glass-2 rounded-3xl"
+          className=" max-w-[500px] mx-auto mt-10 w-full p-7 xs:p-10 flex flex-col gap-5 glass-2 rounded-3xl"
         >
           {/* title  */}
           <h1 className=" text-2xl font-2 font-bold mb-5 w-full text-center">
@@ -69,6 +87,7 @@ const Signup = () => {
                 type="text"
                 className="form-input-2"
                 name="first_name"
+                placeholder="First Name"
               />
               {errors.first_name && (
                 <span className=" text-red-600 text-sm">
@@ -86,6 +105,7 @@ const Signup = () => {
                 type="text"
                 className="form-input-2"
                 name="last_name"
+                placeholder="Last Name"
               />
               {errors.last_name && (
                 <span className=" text-red-600 text-sm">
@@ -104,6 +124,7 @@ const Signup = () => {
               {...register("email", { required: true })}
               type="email"
               className="form-input-2"
+              placeholder="Email"
             />
             {errors.email && (
               <span className=" text-red-600 text-sm">
@@ -117,11 +138,23 @@ const Signup = () => {
             <label className=" opacity-80 capitalize" htmlFor="password">
               Password
             </label>
-            <input
-              {...register("password", { required: true, minLength: 6 })}
-              type="password"
-              className="form-input-2"
-            />
+            <div className="flex items-center form-input-2">
+              <input
+                {...register("password", { required: true, minLength: 6 })}
+                type={show._password ? "text" : "password"}
+                className="password-input"
+                placeholder="Password . . ."
+              />
+              <div
+                onClick={() => setShow({ ...show, _password: !show._password })}
+              >
+                {show._password ? (
+                  <AiOutlineEyeInvisible className=" text-lg" />
+                ) : (
+                  <AiOutlineEye className=" text-lg" />
+                )}
+              </div>
+            </div>
             {errors.password && errors.password.type === "required" && (
               <span className=" text-red-600 text-sm">
                 The password field is required
@@ -142,15 +175,32 @@ const Signup = () => {
             >
               confirm password
             </label>
-            <input
-              {...register("password_confirmation", {
-                required: true,
-                validate: (value) => value === watch("password"),
-              })}
-              type="password"
-              className="form-input-2"
-              name="password_confirmation"
-            />
+            <div className="flex items-center form-input-2">
+              <input
+                {...register("password_confirmation", {
+                  required: true,
+                  validate: (value) => value === watch("password"),
+                })}
+                type={show._passwordConfirmation ? "text" : "password"}
+                className="password-input"
+                name="password_confirmation"
+                placeholder="Password Confirm"
+              />
+              <div
+                onClick={() =>
+                  setShow({
+                    ...show,
+                    _passwordConfirmation: !show._passwordConfirmation,
+                  })
+                }
+              >
+                {show._passwordConfirmation ? (
+                  <AiOutlineEyeInvisible className=" text-lg" />
+                ) : (
+                  <AiOutlineEye className=" text-lg" />
+                )}
+              </div>
+            </div>
             {errors.password_confirmation &&
               errors.password_confirmation.type === "required" && (
                 <span className=" text-red-600 text-sm">

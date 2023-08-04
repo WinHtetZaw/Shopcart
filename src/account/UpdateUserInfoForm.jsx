@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import {
   formModalChildVariant,
   formModalParentVariant,
-} from "../components/animationHelper";
+} from "../helper/animationHelper";
 
 const UpdateUserInfoForm = ({ handleCloseUserForm }) => {
   const dispatch = useDispatch();
@@ -143,7 +143,7 @@ const UpdateUserInfoForm = ({ handleCloseUserForm }) => {
           )}
         </div>
 
-        <button className="mt-3 w-fit text-sm uppercase btn-1 bg-teal-800  text-slate-50 mx-auto">
+        <button className="mt-3 w-fit text-sm uppercase btn-1 bg-teal-800 text-slate-50 mx-auto click-animation">
           Save Changes
         </button>
       </motion.form>

@@ -32,6 +32,7 @@ import Signin from "./account/Signin";
 import ForgotPw from "./account/ForgotPw";
 import ProductDetailLayout from "./layouts/ProductDetailLayout";
 import CategoryLayout from "./layouts/CategoryLayout";
+import Protected from "./components/Protected";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,7 +44,14 @@ const router = createBrowserRouter(
       <Route path="/" element={<RootLayout />} errorElement={<NotFound />}>
         <Route index element={<Home />} breadcrumb="apple" />
 
-        <Route path="account" element={<AccountLayout />}>
+        <Route
+          path="account"
+          element={
+            <Protected>
+              <AccountLayout />
+            </Protected>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="favorite" element={<Favorite />} />
           <Route path="setting" element={<AccSettingLayout />}>
@@ -62,7 +70,14 @@ const router = createBrowserRouter(
           <Route path="search" element={<SearchPage />} />
         </Route>
 
-        <Route path="cart" element={<CartLayout />}>
+        <Route
+          path="cart"
+          element={
+            <Protected>
+              <CartLayout />
+            </Protected>
+          }
+        >
           <Route index element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
         </Route>
@@ -75,7 +90,27 @@ const App = () => {
   return (
     <>
       <div>
-        <Toaster position="top-right" />
+        <Toaster
+          position="top-right"
+          // toastOptions={{
+          //   // Define default options
+          //   className: "",
+          //   duration: 1000,
+          //   // style: {
+          //   //   background: "#363636",
+          //   //   color: "#fff",
+          //   // },
+
+          //   // Default options for specific types
+          //   success: {
+          //     duration: 1000,
+          //     // theme: {
+          //     //   primary: "green",
+          //     //   secondary: "black",
+          //     // },
+          //   },
+          // }}
+        />
       </div>
       <RouterProvider router={router} />
     </>

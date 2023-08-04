@@ -12,7 +12,6 @@ const AllProducts = () => {
   // * hooks
   const { data, isLoading, isSuccess } = useGetAllProductsQuery();
   const products = data?.products;
-  isSuccess && console.log(products);
 
   // * variants
   const cardContainerVariant = {

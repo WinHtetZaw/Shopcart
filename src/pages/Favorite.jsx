@@ -1,13 +1,22 @@
+// * react
+import { useEffect, useState } from "react";
+
 // * mantine ui library
 import { Rating } from "@mantine/core";
 
 // * icons
 import { GoTrash } from "react-icons/go";
+
+// * react redux
 import { useDispatch } from "react-redux";
 import { removeAll, removeFromFavorite } from "../redux/features/favoriteSlice";
-import { useEffect, useRef, useState } from "react";
+
+// * react router dom
 import { Link, useNavigate } from "react-router-dom";
+
+// * components
 import AddNewBtn from "../components/addNewBtn";
+import RemoveAllBtn from "../components/RemoveAllBtn";
 
 const Favorite = () => {
   // * hooks
@@ -41,15 +50,9 @@ const Favorite = () => {
     setIsRemoved(true);
   };
 
-  // ${
-  //   storedFavorite.length > 2
-  //     ? "odd:bg-[#e9f0ff] hover:even:bg-[#f4f7ff]"
-  //     : "hover:bg-[#f4f7ff]"
-  // }
-
   const listsLooping = storedFavorite?.map((el, index) => (
     <div
-      className={`grid grid-cols-12 items-center w-full shadow hover:shadow-2 rounded transition duration-200`}
+      className={`grid grid-cols-12 items-center w-full shadow hover:shadow-md rounded transition duration-200`}
       key={index}
       onClick={() => navigate(`/products/${el.id}`)}
     >
@@ -92,17 +95,16 @@ const Favorite = () => {
   ));
 
   return (
-    <div className=" w-full h-full bg-white px-5 py-7">
+    <div className=" w-full min-h-[85vh] bg-white px-5 py-7">
       {/* head */}
       <section className=" flex justify-between mb-5">
         <h3 className=" font-2">Favorite List</h3>
         {storedFavorite?.length > 0 && (
-          <button
+          <div
             onClick={handleRemoveAll}
-            className="text-sm italic text-red-500"
           >
-            Remove All
-          </button>
+            <RemoveAllBtn/>
+          </div>
         )}
       </section>
 
