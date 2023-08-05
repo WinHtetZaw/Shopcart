@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { removeAll, removeFromFavorite } from "../redux/features/favoriteSlice";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AddNewBtn from "../components/addNewBtn";
+import AddNewBtn from "../components/AddNewBtn";
 
 const Favorite = () => {
   // * hooks
