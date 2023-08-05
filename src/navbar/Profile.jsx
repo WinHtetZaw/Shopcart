@@ -7,7 +7,7 @@ import { GoPerson } from "react-icons/go";
 
 // * react router dom
 import { Link } from "react-router-dom";
-import { setUaiToStorage, shopcartUai } from "../helper/helper";
+import { setUaiToStorage, shopcartUai } from "../components/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLogin } from "../redux/features/generalSlice";
 
@@ -32,6 +32,7 @@ const Profile = () => {
     dispatch(setIsLogin(false));
     shopcartUai.auth = false;
     setUaiToStorage(shopcartUai);
+    // localStorage.setItem("shopcart-UAI", JSON.stringify(shopcartUai));
     toast.success("Successfully log out!");
   };
 

@@ -2,34 +2,25 @@
 import { useState } from "react";
 
 // * react router dom
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // * react hook form
 import { useForm } from "react-hook-form";
 
-// * alert notification
+// * react hot toast
 import { toast } from "react-hot-toast";
-
-// * redux
 import { useDispatch } from "react-redux";
 import { setIsLogin } from "../redux/features/generalSlice";
-
-// * helper function
-import { UAI, setUaiToStorage, setLocalStorage } from "../helper/helper";
-
-// * icons
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { setUaiToStorage } from "../components/helper";
 
 const Signin = () => {
-  // * hooks
   const [loginErr, setLoginErr] = useState("");
-  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: { email: "johndoe@gmail.com", password: "aaaaaaaa" },
@@ -37,22 +28,18 @@ const Signin = () => {
 
   // * UAI ---> user account information
   const onSubmit = (data) => {
+    // const UAI = JSON.parse(localStorage.getItem("shopcart-UAI"));
+    const UAI = JSON.parse(localStorage.getItem("shopcart-UAI"));
     if (UAI && data.email === UAI.email && data.password === UAI.password) {
       UAI.auth = true;
-      setLocalStorage("shopcart-UAI", UAI);
+      setUaiToStorage(UAI);
+      // localStorage.setItem("shopcart-UAI", JSON.stringify(UAI));
       toast.success("Successfully Log in!");
       dispatch(setIsLogin(true));
-
-      if (location.state) {
-        navigate("/products");
-      } else {
-        navigate(-1);
-      }
+      navigate("/products");
     } else {
       setLoginErr("Email or password wrong");
-      toast.error("Cannot log in", {
-        id: "clipboard",
-      });
+      toast.error("Cannot log in");
     }
   };
 
@@ -60,17 +47,10 @@ const Signin = () => {
     <>
       <div className=" bg-[url(https://images.pexels.com/photos/236910/pexels-photo-236910.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)] relative flex items-center justify-center p-3 xs:p-10 w-screen h-screen bg-cover bg-center bg-no-repeat overflow-hidden overflow-y-scroll">
         <Link to={"/products"}>
-          <button className="absolute top-5 left-10 link-btn">
-            Go to shop
+          <button className="absolute top-5 left-10 text-slate-50 tracking-widest font-light italic">
+            Go to shop . . .
           </button>
         </Link>
-
-        <button
-          onClick={() => navigate(-1)}
-          className="absolute top-10 left-10 link-btn"
-        >
-          Go Back
-        </button>
 
         {/* log in form  */}
         <form
@@ -91,7 +71,6 @@ const Signin = () => {
               {...register("email", { required: true })}
               type="email"
               className="form-input-2"
-              placeholder="Email"
             />
             {errors.email && (
               <span className=" text-red-600 text-sm">
@@ -106,21 +85,11 @@ const Signin = () => {
             <label className=" opacity-80 capitalize" htmlFor="password">
               Password
             </label>
-            <div className="flex items-center form-input-2">
-              <input
-                {...register("password", { required: true, minLength: 6 })}
-                type={show ? "text" : "password"}
-                className="password-input"
-                placeholder="Password . . ."
-              />
-              <div onClick={() => setShow(!show)}>
-                {show ? (
-                  <AiOutlineEyeInvisible className=" text-lg" />
-                ) : (
-                  <AiOutlineEye className=" text-lg" />
-                )}
-              </div>
-            </div>
+            <input
+              {...register("password", { required: true, minLength: 6 })}
+              type="password"
+              className="form-input-2"
+            />
             {errors.password && errors.password.type === "required" && (
               <span className=" text-red-600 text-sm">
                 The password field is required
@@ -133,6 +102,24 @@ const Signin = () => {
             )}
           </div>
 
+          {/* <div className="flex flex-col">
+            <span className="flex gap-3 items-center">
+              <input
+                {...register("isChecked", { required: true })}
+                className=" accent-teal-800"
+                type="checkbox"
+              />
+              <p className="opacity-80 tracking-wide">
+                I accept the Terms of Use & Privacy Policy
+              </p>
+            </span>
+            {errors.isChecked && errors.isChecked.type === "required" && (
+              <span className=" text-red-600 text-sm">
+                You must agree to the terms and privacy policy
+              </span>
+            )}
+          </div> */}
+
           <section>
             <Link to={"/register"}>
               <div className=" text-sm flex gap-2">
@@ -143,17 +130,16 @@ const Signin = () => {
               </div>
             </Link>
 
-            {/* <Link to={"/password-recovery"}> */}
-            <p className=" text-sm underline select-none cursor-pointer">
-              Forgot password
-            </p>
-            {/* </Link> */}
+            <Link to={"/password-recovery"}>
+              <p className=" text-sm underline">Forgot password</p>
+            </Link>
           </section>
 
           <button className=" w-[10rem] uppercase btn-1 bg-teal-800 text-slate-50 mx-auto">
             Log in
           </button>
         </form>
+        {/* </div> */}
       </div>
     </>
   );

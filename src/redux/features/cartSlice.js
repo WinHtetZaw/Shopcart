@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getLocalStorage, setLocalStorage } from "../../helper/helper";
 
 const initialState = {
   cartProducts: [],
@@ -9,8 +8,8 @@ const initialState = {
 };
 
 let storedCart;
-if (getLocalStorage("storedCart")?.products.length > 0) {
-  storedCart = getLocalStorage("storedCart");
+if (JSON.parse(localStorage.getItem("storedCart"))?.products.length > 0) {
+  storedCart = JSON.parse(localStorage.getItem("storedCart"));
   initialState.cartProducts = storedCart.products;
   initialState.currentItemInfo = storedCart?.currentProduct;
   initialState.totalPrice = storedCart?.totalPrice;
@@ -55,9 +54,8 @@ export const cartSlice = createSlice({
         currentProduct: state.currentItemInfo,
         totalPrice: state.totalPrice,
       };
-      setLocalStorage("storedCart", storedCart);
+      localStorage.setItem("storedCart", JSON.stringify(storedCart));
     },
-
     removeFromCart: (state, { payload }) => {
       // * filter cart products
       const lists = state.cartProducts.filter((el) => el.id != payload.id);
@@ -82,7 +80,7 @@ export const cartSlice = createSlice({
         currentProduct: state.currentItemInfo,
         totalPrice: state.totalPrice,
       };
-      setLocalStorage("storedCart", storedCart);
+      localStorage.setItem("storedCart", JSON.stringify(storedCart));
     },
 
     // * when click + btn increase quantity and price method
@@ -93,6 +91,7 @@ export const cartSlice = createSlice({
       );
 
       if (filter.quantity == payload.stock) {
+        console.log("tu nay p");
         return;
       }
 
@@ -106,7 +105,7 @@ export const cartSlice = createSlice({
         currentProduct: state.currentItemInfo,
         totalPrice: state.totalPrice,
       };
-      setLocalStorage("storedCart", storedCart);
+      localStorage.setItem("storedCart", JSON.stringify(storedCart));
     },
 
     // * when click - btn reduce quantity and price
@@ -128,9 +127,8 @@ export const cartSlice = createSlice({
         currentProduct: state.currentItemInfo,
         totalPrice: state.totalPrice,
       };
-      setLocalStorage("storedCart", storedCart);
+      localStorage.setItem("storedCart", JSON.stringify(storedCart));
     },
-
     setShippingCost: (state, { payload }) => {
       state.shippingCost = payload;
     },

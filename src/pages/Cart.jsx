@@ -17,11 +17,12 @@ import {
 // components
 import BackBtn from "../components/BackBtn";
 import AddNewBtn from "../components/AddNewBtn";
-import RemoveAllBtn from "../components/RemoveAllBtn";
+// import RemoveAllBtn from "../components/RemoveAllBtn";
 
 const Cart = () => {
   const { cartProducts } = useSelector((state) => state.cartSlice);
   const dispatch = useDispatch();
+  console.log("cart products ---- ", cartProducts);
 
   let storedCart;
   if (JSON.parse(localStorage.getItem("storedCart"))?.products.length > 0) {
@@ -116,9 +117,13 @@ const Cart = () => {
                 cart table
               </h2>
 
-              <div onClick={() => dispatch(removeAll())}>
-                <RemoveAllBtn />
-              </div>
+              <button
+                onClick={() => dispatch(removeAll())}
+                className=" active:scale-95 transition duration-200 select-none flex gap-1 items-center"
+              >
+                <GoTrash />
+                <h5 className="text-red-600">Remove all</h5>
+              </button>
             </div>
 
             {/* table  */}
@@ -146,7 +151,7 @@ const Cart = () => {
 
             <div className=" ml-auto w-fit mt-5">
               <Link to={"/products"}>
-                <AddNewBtn />
+                <AddNewBtn/>
               </Link>
             </div>
           </section>

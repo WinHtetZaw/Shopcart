@@ -4,14 +4,9 @@ import { BiLogoProductHunt } from "react-icons/bi";
 import { FaTruck } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import { PiSquareHalfBold } from "react-icons/pi";
-
-// * components
 import LChart from "../account/LChart";
 import PChart from "../account/PChart";
 import InvoiceTable from "../account/InvoiceTable";
-
-// * react router dom
-import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   return (
@@ -23,23 +18,19 @@ const Dashboard = () => {
 
         {/* right  */}
         <div className=" flex items-center gap-3">
-          <BsBell className=" cursor-pointer active:scale-90" />
-          <BsQuestionCircle className=" cursor-pointer active:scale-90" />
-          <Link to={"/products"}>
-            <button className="text-sm bdr p-2 rounded-md select-none click-animation shadow-md">
-              View Shop
-            </button>
-          </Link>
+          <BsBell />
+          <BsQuestionCircle />
+          <button className="text-sm bdr p-2 rounded-md">View Shop</button>
         </div>
       </section>
 
       {/* cards  */}
       <section className="grid grid-cols-12 gap-3 mb-16">
         {/* first card  */}
-        <div className=" col-span-12 xs:col-span-6 lg:col-span-3 bg-white-1 rounded-md">
+        <div className=" col-span-12 xs:col-span-6 lg:col-span-3 bg-[#f9fafc] rounded-md">
           <div className="flex border-b items-center gap-2 p-2">
-            <span className="rounded w-7 h-7 flex justify-center items-center bg-white-2">
-              <FaTruck className=" bg-white-2" />
+            <span className="rounded w-7 h-7 flex justify-center items-center bg-[#ebedef]">
+              <FaTruck className=" bg-[#ebedef]" />
             </span>
             <h1>Delivery</h1>
           </div>
@@ -60,10 +51,10 @@ const Dashboard = () => {
         </div>
 
         {/* second card  */}
-        <div className=" col-span-12 xs:col-span-6 lg:col-span-3 bg-white-1 rounded-md">
+        <div className=" col-span-12 xs:col-span-6 lg:col-span-3 bg-[#f9fafc] rounded-md">
           <div className="flex border-b items-center gap-2 p-2">
-            <span className="rounded w-7 h-7 flex justify-center items-center bg-white-2">
-              <MdPayment className=" bg-white-2" />
+            <span className="rounded w-7 h-7 flex justify-center items-center bg-[#ebedef]">
+              <MdPayment className=" bg-[#ebedef]" />
             </span>
             <h1>Payment</h1>
           </div>
@@ -84,10 +75,10 @@ const Dashboard = () => {
         </div>
 
         {/* third card  */}
-        <div className=" col-span-12 xs:col-span-6 lg:col-span-3 bg-white-1 rounded-md">
+        <div className=" col-span-12 xs:col-span-6 lg:col-span-3 bg-[#f9fafc] rounded-md">
           <div className="flex border-b items-center gap-2 p-2">
-            <span className="rounded w-7 h-7 flex justify-center items-center bg-white-2">
-              <BiLogoProductHunt className=" bg-white-2" />
+            <span className="rounded w-7 h-7 flex justify-center items-center bg-[#ebedef]">
+              <BiLogoProductHunt className=" bg-[#ebedef]" />
             </span>
             <h1>Product</h1>
           </div>
@@ -108,10 +99,10 @@ const Dashboard = () => {
         </div>
 
         {/* fourth card  */}
-        <div className=" col-span-12 xs:col-span-6 lg:col-span-3 bg-white-1 rounded-md">
+        <div className=" col-span-12 xs:col-span-6 lg:col-span-3 bg-[#f9fafc] rounded-md">
           <div className="flex border-b items-center gap-2 p-2">
-            <span className="rounded w-7 h-7 flex justify-center items-center bg-white-2">
-              <PiSquareHalfBold className=" bg-white-2" />
+            <span className="rounded w-7 h-7 flex justify-center items-center bg-[#ebedef]">
+              <PiSquareHalfBold className=" bg-[#ebedef]" />
             </span>
             <h1>Product</h1>
           </div>
@@ -134,11 +125,11 @@ const Dashboard = () => {
 
       {/* line chart  */}
       <section className="flex overflow-x-scroll">
-        <LChart />
-        <PChart />
+          <LChart />
+          <PChart />
       </section>
 
-      <InvoiceTable />
+      <InvoiceTable/>
     </div>
   );
 };

@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import {
   formModalChildVariant,
   formModalParentVariant,
-} from "../helper/animationHelper";
+} from "../components/animationHelper";
 import { setAddressInfo } from "../redux/features/updateInfoSlice";
 
 const UpdateAddressForm = ({ handleCloseAddressForm }) => {
@@ -141,7 +141,7 @@ const UpdateAddressForm = ({ handleCloseAddressForm }) => {
           )}
         </div>
 
-        <button className="mt-3 w-fit uppercase text-sm btn-1 bg-teal-800 text-slate-50 mx-auto click-animation">
+        <button className="mt-3 w-fit uppercase text-sm btn-1 bg-teal-800  text-slate-50 mx-auto">
           Save Changes
         </button>
       </motion.form>

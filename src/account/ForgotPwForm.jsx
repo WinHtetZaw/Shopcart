@@ -7,39 +7,36 @@ import { Link, useNavigate } from "react-router-dom";
 // * react hook form
 import { useForm } from "react-hook-form";
 
-// * alert notification
+// * react hot toast
 import { toast } from "react-hot-toast";
 
-// * icons
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-
-// * helper
-import { UAI, setUaiToStorage } from "../helper/helper";
-
 const ForgotPwForm = () => {
-  // * hooks
   const [loginErr, setLoginErr] = useState("");
-  const [show, setShow] = useState({
-    _oldPassword: false,
-    _newPassword: false,
-  });
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: { email: "johndoe@gmail.com" },
   });
 
-  // * handles
   // ? UAI ---> user account information
   const onSubmit = (data) => {
-    if (UAI && data.email === UAI.email && data.old_password === UAI.password) {
+    const UAI = JSON.parse(localStorage.getItem("shopcart-UAI"));
+    // console.log(UAI);
+    // console.log(data);
+    if (
+      UAI &&
+      data.email === UAI.email &&
+      data.old_password === UAI.password &&
+      UAI.auth === true
+    ) {
       UAI.password = data.new_password;
-      setUaiToStorage(UAI);
+      localStorage.setItem("shopcart-UAI", JSON.stringify(UAI));
       toast.success("Successfully password changed!");
-      navigate(-1);
+      navigate("/log-in");
     } else {
       setLoginErr("Email or password wrong");
       toast.error("Password didn't change!");
@@ -65,7 +62,7 @@ const ForgotPwForm = () => {
           {...register("email", { required: true })}
           type="email"
           className="form-input-2"
-          placeholder="Email"
+          placeholder="Enter email"
         />
         {errors.email && (
           <span className=" text-red-600 text-sm">
@@ -80,25 +77,12 @@ const ForgotPwForm = () => {
         <label className="  capitalize" htmlFor="old_password">
           Old Password
         </label>
-        <div className="flex items-center form-input-2">
-          <input
-            {...register("old_password", { required: true, minLength: 6 })}
-            type={show._oldPassword ? "text" : "password"}
-            className="password-input"
-            placeholder="Password . . . "
-          />
-          <div
-            onClick={() =>
-              setShow({ ...show, _oldPassword: !show._oldPassword })
-            }
-          >
-            {show._oldPassword ? (
-              <AiOutlineEyeInvisible className=" text-lg" />
-            ) : (
-              <AiOutlineEye className=" text-lg" />
-            )}
-          </div>
-        </div>
+        <input
+          {...register("old_password", { required: true, minLength: 6 })}
+          type="password"
+          className="form-input-2"
+          placeholder="Password . . . "
+        />
         {errors.old_password && errors.old_password.type === "required" && (
           <span className=" text-red-600 text-sm">
             The password field is required
@@ -116,25 +100,12 @@ const ForgotPwForm = () => {
         <label className="  capitalize" htmlFor="new_password">
           New Password
         </label>
-        <div className="flex items-center form-input-2">
-          <input
-            {...register("new_password", { required: true, minLength: 6 })}
-            type={show._newPassword ? "text" : "password"}
-            className="password-input"
-            placeholder="Password . . . "
-          />
-          <div
-            onClick={() =>
-              setShow({ ...show, _newPassword: !show._newPassword })
-            }
-          >
-            {show._newPassword ? (
-              <AiOutlineEyeInvisible className=" text-lg" />
-            ) : (
-              <AiOutlineEye className=" text-lg" />
-            )}
-          </div>
-        </div>
+        <input
+          {...register("new_password", { required: true, minLength: 6 })}
+          type="password"
+          className="form-input-2 placeholder:text-slate-600"
+          placeholder="Password . . . "
+        />
         {errors.new_password && errors.new_password.type === "required" && (
           <span className=" text-red-600 text-sm">
             The password field is required
@@ -147,8 +118,8 @@ const ForgotPwForm = () => {
         )}
       </div>
 
-      <div className="flex gap-2 text-sm">
-        <Link to={"/register"}>
+      <div className="flex gap-3 text-sm">
+        <Link to={"/log-up"}>
           <span className="underline select-none cursor-pointer">Register</span>
         </Link>
         <Link to={"/log-in"}>

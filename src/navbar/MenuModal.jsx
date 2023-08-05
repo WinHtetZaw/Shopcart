@@ -10,7 +10,7 @@ import { GoPerson } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
 
 // * components
-import { shopcartUai } from "../helper/helper";
+import { shopcartUai } from "../components/helper";
 import Search from "./Search";
 
 const MenuModal = () => {

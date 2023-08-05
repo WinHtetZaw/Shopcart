@@ -15,7 +15,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BsCartPlus, BsCartDash } from "react-icons/bs";
 
 // * rtk
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../redux/features/cartSlice";
 import {
   addToFavorite,
@@ -24,7 +24,6 @@ import {
 
 // * alert notification
 import { toast } from "react-hot-toast";
-import GuestAlert from "./GuestAlert";
 
 const ProductCard = (props) => {
   const { id, title, thumbnail, description, category, rating, price } = props;
@@ -32,7 +31,6 @@ const ProductCard = (props) => {
   // * hooks
   const [isAdded, setIsAdded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const { isLogin } = useSelector((state) => state.generalSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -49,27 +47,18 @@ const ProductCard = (props) => {
   const isCurrentProduct = currentProduct?.find(
     (el) => el.currentProductId == id
   );
+  // isCurrentProduct && console.log(isCurrentProduct);
 
   const currentFavoriteProduct = storedFavorite?.find((el) => el.id == id);
 
-  const UAI = JSON.parse(localStorage.getItem("shopcart-UAI"));
-
-  useEffect(() => {
-    if (currentFavoriteProduct) {
-      setIsFavorite(true);
-    }
-  }, []);
-
   // const current = storedFavorite?.find((el) => el.id === id);
+  // console.log(current);
+
+  // currentFavoriteProduct && console.log(currentFavoriteProduct);
 
   // * handles
   const handleAddToCartClick = (e, product) => {
     e.stopPropagation();
-
-    if (!UAI.auth || !isLogin) {
-      toast.custom((t) => <GuestAlert t={t} />);
-      return;
-    }
     setIsAdded(true);
     dispatch(addToCart(product));
     toast.success("Successfully added");
@@ -77,26 +66,13 @@ const ProductCard = (props) => {
 
   const handleRemoveFromCartClick = (e, product) => {
     e.stopPropagation();
-
-    if (!UAI.auth || !isLogin) {
-      toast.custom((t) => <GuestAlert t={t} />);
-      return;
-    }
-
     setIsAdded(false);
     dispatch(removeFromCart(product));
     toast.success("Successfully removed");
   };
 
-
   const handleAddFavoriteClick = (e, product) => {
     e.stopPropagation();
-
-    if (!UAI.auth || !isLogin) {
-      toast.custom((t) => <GuestAlert t={t} />);
-      return;
-    }
-
     setIsFavorite(true);
     dispatch(addToFavorite(product));
     toast.success("Successfully added");
@@ -104,12 +80,6 @@ const ProductCard = (props) => {
 
   const handleRemoveFavoriteClick = (e, product) => {
     e.stopPropagation();
-
-    if (!UAI.auth || !isLogin) {
-      toast.custom((t) => <GuestAlert t={t} />);
-      return;
-    }
-
     setIsFavorite(false);
     dispatch(removeFromFavorite(product));
     toast.success("Successfully removed");
@@ -121,7 +91,7 @@ const ProductCard = (props) => {
       className=" relative bg-white"
     >
       {/* favorite icon  */}
-      <div className=" absolute z-10 top-2 right-2 bg-white p-1 rounded-full">
+      <div className=" absolute z-0 top-2 right-2 bg-white p-1 rounded-full">
         {currentFavoriteProduct ? (
           <AiFillHeart
             onClick={(e) => handleRemoveFavoriteClick(e, props)}
@@ -136,7 +106,7 @@ const ProductCard = (props) => {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.5, delay: 0.2, ease: "easeIn" }}
-        className="relative select-none hover:shadow-4 transition duration-200 rounded-lg w-full aspect-square bg-gray-100"
+        className="relative hover:shadow-4 transition duration-200 rounded-lg w-full aspect-square bg-gray-100"
       >
         <img
           className=" object-contain w-full h-full"

@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="bg-white px-5 flex items-center sm:justify-between w-full h-20  border-b border-gray-300">
+      <div className="bg-white px-5  flex items-center sm:justify-between w-full h-20  border-b border-gray-300">
         {/* logo  */}
         <Link to={"/products"}>
           <h1 className=" hidden sm:flex items-center gap-1">
@@ -60,9 +60,9 @@ const Navbar = () => {
             <div className="icon-heading-1 relative">
               <FiShoppingCart className="text-xl" />
               {currentProduct?.length > 0 && (
-                <span className="absolute top-0 left-4 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute top-1 left-4 w-2 h-2 bg-red-500 rounded-full"></span>
               )}
-              {/* <h3 className=" heading-2">Cart</h3> */}
+              <h3 className=" heading-2">Cart</h3>
             </div>
           </Link>
 

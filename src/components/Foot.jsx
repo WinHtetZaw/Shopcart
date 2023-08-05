@@ -1,6 +1,6 @@
 const Foot = () => {
   return (
-    <div className="flex w-full h-full bg-white-1 p-3 xs:p-5 lg:py-10 lg:px-14">
+    <div className="flex w-full h-full bg-[#dee4eb] p-3 xs:p-5 lg:py-10 lg:px-14">
       <article className=" md:px-5 w-5/12">
         <h1 className="md:text-lg tracking-widest mb-3 font-bold font-2">
           ShopCart

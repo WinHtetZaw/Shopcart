@@ -1,17 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getLocalStorage, setLocalStorage } from "../../helper/helper";
 
 const initialState = {
   categoryName: "",
   scrollable: true,
   isLogin: false,
 };
-
-let authUser;
-if (getLocalStorage("auth-user")) {
-  authUser = getLocalStorage("auth-user");
-  initialState.favoriteProducts = authUser;
-}
 
 export const generalSlice = createSlice({
   name: "generalSlice",
@@ -33,10 +26,8 @@ export const generalSlice = createSlice({
     setIsLogin: (state, { payload }) => {
       if (payload) {
         state.isLogin = payload;
-        setLocalStorage("auth-user", state.isLogin);
       } else {
         state.isLogin = !state.isLogin;
-        setLocalStorage("auth-user", state.isLogin);
       }
     },
   },

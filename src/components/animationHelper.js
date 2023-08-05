@@ -38,10 +38,3 @@ export const formModalChildVariant = {
     transition: { duration: 0.3, ease: "easeOut" },
   },
 };
-
-// * dashboard sidebar animation
-export const sidebarItemVariant = {
-  hidden: { scaleX: 0 },
-  show: { scaleX: 1, transition: { duration: 0.2, delay: 0.1 } },
-  exit: { scaleX: 0, transition: { duration: 0.2 } },
-};
